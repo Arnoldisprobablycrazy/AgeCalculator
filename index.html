@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+ 
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <main class="bg-Offwhite flex min-h-screen flex-col items-center justify-center font-poppins ">
+    <div class="w-[550px] rounded-xl p-6 bg-White rounded-br-[8.5rem]">
+      <form id="myForm" name="myform">
+        <div class="flex gap-4 ">
+          <div class="flex flex-col gap-1">
+            <label for="day" class="text-xs text-Smokeygrey">DAY</label>
+            <input type="number" name="day" id="day" placeholder="DD"
+              class="w-[6.5rem] px-3 py-3 border-2 border-Lightgrey rounded-lg">
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="month" class="text-xs text-Smokeygrey">MONTH</label>
+            <input type="number" name="month" id="month" placeholder="MM"
+              class="w-[6.5rem] px-3 py-3 border-2 border-Lightgrey rounded-lg">
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <label for="year" class="text-xs font-semibold  text-Smokeygrey">YEAR</label>
+            <input type="number" name="year" id="year" placeholder="YYYY"
+              class="w-[6.5rem] px-3 py-3 border-2 border-Lightgrey rounded-lg">
+          </div>
+        </div>
+
+
+        <div class="relative">
+          <hr class="my-6 border-b-Lightgrey w-[90%]">
+          <button id="submit" onclick="document.getElementById('submit').style.backgroundColor= 'Offwhite' ">
+            <img src="/assets/images/icon-arrow.svg" alt=""
+              class="absolute -top-5 right-0 flex h-12 w-12 items-center justify-center rounded-full bg-PurpleC mr-10">
+          </button>
+        </div>
+      </form>
+
+
+
+      <div class="flex flex-col gap-4 rounded-br-full">
+        <div class="flex gap-2 items-center">
+          <span class="text-PurpleC text-5xl font-bold italic" id="YY">--</span>
+          <span class="text-Offblack text-6xl font-bold font-poppins italic">years</span>
+        </div>
+
+        <div class="flex gap-2 items-center">
+          <span class="text-PurpleC text-5xl font-bold italic" id="MM">--</span>
+          <span class="text-Offblack text-6xl font-bold font-poppins italic">months</span>
+        </div>
+
+        <div class="flex gap-2 items-center">
+          <span class="text-PurpleC text-5xl font-bold italic" id="DD">--</span>
+          <span class="text-Offblack text-6xl font-bold font-poppins italic">days</span>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Select the form element
+    const form = document.querySelector('form');
+
+    // Add a submit event listener to the form
+    form.addEventListener('submit', function (event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Get the values of day, month, and year inputs
+        const day = parseInt(document.getElementById('day').value);
+        const bornMonth = parseInt(document.getElementById('month').value);
+        const bornYear = parseInt(document.getElementById('year').value);
+
+        // Get the current date
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth() + 1;
+        const currentDay = currentDate.getDate();
+
+
+        
+
+        // Calculate the age
+        let age = currentYear - bornYear;
+        if (currentMonth < bornMonth || (currentMonth === bornMonth && currentDay < day)) {
+            age--; // Subtract 1 from age if the current date is before the birthday this year
+        }
+
+        // Calculate the remaining months and days
+        let months = currentMonth - bornMonth;
+        if (months < 0) {
+            months += 12; // Add 12 months if the current month is before the birth month
+        }
+        let days = currentDay - day;
+        if (days < 0) {
+            // Calculate the number of days in the birth month
+            const daysInLastMonth = new Date(currentYear, currentMonth - 1, 0).getDate();
+            days += daysInLastMonth; // Add the days in the birth month
+            months--; // Subtract 1 from months
+        }
+
+        // Display the calculated age, months, and days in the HTML elements
+        document.getElementById('YY').textContent = age;
+        document.getElementById('MM').textContent = months; // Fixed the selector
+        document.getElementById('DD').textContent = days; // Fixed the selector
+
+
+        
+
+        
+    });
+});
+
+var submit=document.getElementById('submit');
+submit.style.backgroundColor='hsl(0, 0%, 8%)';
+  
+</script>
+
+
